@@ -42,8 +42,9 @@ LCD4Linux是一个从内核和一些子系统中获取信息，并把它们显�
   
   
 - 附件下载：
-  - [LCD4Linux.pdf](https://lcd4linux.bulix.org/attachment/wiki/WikiStart/LCD4Linux.pdf) (772.9 KB)
-  - [fix.txt](https://lcd4linux.bulix.org/attachment/wiki/WikiStart/fix.txt) (3.8 KB)
-  - [playlist.m3u](https://lcd4linux.bulix.org/attachment/wiki/WikiStart/playlist.m3u) (368 bytes)
+  - [LCD4Linux.pdf](https://github.com/enify/lcd4linux-doc/blob/master/resource/LCD4Linux.pdf) (772.9 KB)
+  - [fix.txt](https://github.com/enify/lcd4linux-doc/blob/master/resource/fix.txt) (3.8 KB)
+  - [playlist.m3u](https://github.com/enify/lcd4linux-doc/blob/master/resource/playlist.m3u) (368 bytes)
   
-  下载 [附件压缩包](https://lcd4linux.bulix.org/zip-attachment/wiki/WikiStart/).
+  下载 [附件压缩包](https://github.com/enify/lcd4linux-doc/blob/master/resource/attachments-wiki-WikiStart.zip).
+  
