@@ -1,0 +1,68 @@
+= Trac FAQ
+
+Aqui você pode encontrar respostas para algumas das perguntas mais frequentes sobre o Trac. Se você tem uma pergunta não respondida nesta página, você pode pedi-lo na MailingList ou no IrcChannel. Veja a página de TracSupport para mais opções sobre como obter apoio para Trac.
+
+----
+**Nota:** Na ocasião do lançamento da versão 1.0 próximo, estamos reiniciando o FAQ do zero. Se você não encontrar a resposta que você está procurando por aqui, ** também dar uma olhada no antigo [wiki: "0.12/TracFaq"] ** (para Trac 0.12 e versões anteriores).
+
+----
+[[PageOutline(2-6,,inline)]]
+----
+
+== Solução de problemas de instalação
+
+=== Instalação da fonte
+
+==== Q: Por que eu recebo NameError: 'log' nome global não está definido quando tento usar setup.py?
+
+{{{
+../trunk/$ python setup.py egg_info
+running egg_info
+...
+  File "build/bdist.linux-x86_64/egg/setuptools/svn_util.py", line 55, in get_sections
+NameError: global name 'log' is not defined
+}}}
+
+**A:** Você é mais provável trabalhar a partir de uma subversão ** 1,7 ** checkout e você estiver usando um velho demais `pacote` setuptools (por exemplo, `/ setuptools-0.7a1dev_r66608`).
+
+Veja # 7598. Upgrade para uma setuptools mais novos, de downgrade para svn 1.6.x, use distribute.
+
+==== Q: Porque é que a instalação do `distribute` não `com ValueError: A setuptools 0,7 série não pode ser instalado com distribute`.?
+
+Você tentou instalar o `` distribute como aconselhado em outro lugar:
+{{{
+$ curl http://python-distribute.org/distribute_setup.py | python
+}}}
+mas você é saudado com:
+{{{
+ValueError: A 0.7-series setuptools cannot be installed with distribute. Found one at /packages/trac/virtualenv-0.13/lib/python2.7/site-packages/setuptools-0.7a1dev_r66608-py2.7.egg
+}}}
+
+**A:**Não desista, é apenas `` setuptools dando-lhe uma última luta.
+
+Você pode remover os setuptools ofensivos. egg ... e se mantém re-aparecer, você tem instalado não só no virtualenv mas também na instalação pai Python (aquele em que você instalou o virtualenv em si). Se este for o caso, retire-o de lá também, a instalação distribuem agora deve funcionar.
+
+==== Q: Por que acidentes Apache (500) com um ZipImportError `no log de erro?
+
+{{{
+[Tue Aug 07 09:08:26 2012] [error] [client 172.25.16.59] mod_wsgi (pid=16444): Exception occurred processing WSGI script '/packages/trac/virtualenv-0.13/bin/trac.wsgi'., referer: http://dserver/trac/bct/timeline
+...
+[Tue Aug 07 09:08:26 2012] [error] [client 172.25.16.59]   File "build/bdist.linux-x86_64/egg/pkg_resources.py", line 1197, in _get, referer: xxx/trac/bct/timeline
+[Tue Aug 07 09:08:26 2012] [error] [client 172.25.16.59] ZipImportError: bad local file header in /packages/trac/virtualenv-0.13/lib/python2.7/site-packages/Genshi-0.6-py2.7.egg, referer: xxx/trac/bct/timeline
+}}}
+
+**A:** Você certamente se esqueceu de parar e reiniciar o servidor durante uma atualização. O mecanismo importador zip mantém um cache interno, que tem problemas para detectar arquivos substituídos, por isso é necessário reiniciar (ver ZipImportError TracUpgrade #). Faça isso agora.
+
+==== Q: Trac / about diz 1.0, mas o estilo parece pré-1.0
+
+**A:** Você provavelmente só precisa convencer o seu navegador que os arquivos CSS mudaram. Tente "recarregar a força" (CTRL + `R` ou `CTRL + Shift + R`, dependendo do seu navegador). Este é um problema comum (ver, por exemplo, # 10797).
+
+Se isso não funcionar, procure na sua configuração do servidor para ver onde os arquivos são cromo deve ser servido a partir de (`alias` ou `AliasMatch directive`), e talvez você vai ver que você está servindo-os como estático arquivos de um local diferente:
+{{{
+Alias /trac/bct/chrome /packages/trac/virtualenv-0.13/share/htdocs
+}}}
+Neste caso, não se esqueça de:
+{{{
+$ trac-admin <yourenv> deploy /packages/trac/virtualenv-0.13/share
+}}}
+Veja TracUpgrade # a5.Refreshstaticresources.
