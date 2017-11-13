@@ -151,4 +151,4 @@ imap_close($mbox);
 <br>
 
 ## 附件下载
-  - [layers_and_frame.avi](https://lcd4linux.bulix.org/attachment/wiki/widget_icon/layers_and_frame.avi)  (28.5 KB) - 动态邮件图符的演示
+  - [layers_and_frame.avi](https://github.com/enify/lcd4linux-doc/blob/master/resource/layers_and_frame.avi)  (28.5 KB) - 动态邮件图符的演示
